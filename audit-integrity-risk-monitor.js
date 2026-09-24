@@ -248,7 +248,7 @@
     function getCount(key) { return parseInt(sessionStorage.getItem(key) || '0', 10); }
     function setCount(key, val) { sessionStorage.setItem(key, String(val)); }
 
-    node_interception: function recordConflicts(n) {
+    function recordConflicts(n) {
         if (n === 0) return;
         const url  = window.location.pathname;
         const seen = JSON.parse(sessionStorage.getItem(COUNTER_KEY_URLS) || '[]');
