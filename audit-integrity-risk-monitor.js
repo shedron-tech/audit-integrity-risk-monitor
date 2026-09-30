@@ -11,7 +11,7 @@
     'use strict';
 
     // BUSINESS IMPACT: This tool serves as a real-time compliance gatekeeper. By auditing the auditor 
-    // in real-time, it completely eliminates data conflict defects (False Positives), protecting downstream SLA metrics.
+    // in real-time, it reduces false-positive defects, protecting downstream SLA metrics.
     // Simplified public version. URLs and labels are generic.
 
     const EXCLUDED_GROUP_IDS = ['internal_filter_01'];
