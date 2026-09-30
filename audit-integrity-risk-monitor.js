@@ -12,6 +12,7 @@
 
     // BUSINESS IMPACT: This tool serves as a real-time compliance gatekeeper. By auditing the auditor 
     // in real-time, it completely eliminates data conflict defects (False Positives), protecting downstream SLA metrics.
+    // Simplified public version. URLs and labels are generic.
 
     const EXCLUDED_GROUP_IDS = ['internal_filter_01'];
 
@@ -220,7 +221,7 @@
         return 'Unknown';
     }
 
-    function addEntry(tabValue, event, whichField, nafSelected) {
+    function addEntry(tabValue, event, whichField, noAbuseSelected) {
         const item = getItemID();
         if (wasEventSeen(item, tabValue, event)) return;
         const all = getAllEntries();
@@ -381,7 +382,7 @@
         banner.appendChild(makeCloseBtn('banner-close', () => banner.remove()));
     }
 
-    function showAgentzReminderBanner() {
+    function showReviewReminderBanner() {
         if (document.getElementById('compliance-checklist-banner')) return;
         const banner = document.createElement('div');
         banner.id = 'compliance-checklist-banner';
