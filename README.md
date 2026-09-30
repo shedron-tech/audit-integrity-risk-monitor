@@ -1,21 +1,28 @@
-# Audit Integrity Risk Monitor (False Positive Guard)
+# Audit Integrity Risk Monitor
 
-**Role context:** Risk & Compliance Operations Framework  
-**Tech Stack:** JavaScript (ES6), MutationObserver API, HTML5 SessionStorage, LocalStorage context injection.
+Browser userscript (Tampermonkey) that flags conflicting audit selections before submission.
 
-## 📌 Business Problem
-During high-volume database auditing and data logging, compliance operators frequently face complex UI data entries. Human input oversight often leads to structural data-entry mismatches—such as leaving a "Yes" defect assertion toggled while selecting a primary action of "No Abuse Found". These conflicting signals create system-wide defects (False Positives) that compromise down-river auditing tracking data and metric SLAs.
+## Problem
+Audits pre-filled by an automated agent were sometimes submitted without a real review.
+When a reviewer left a wrong decision in place, the result was a false-positive defect
+that counted against the audit.
 
-## 🚀 The Solution
-Designed and deployed a programmatic monitoring engine injected at the browser layer that acts as an automated real-time compliance gatekeeper.
+## Solution
+- Detects when a tab has contradictory selections (a "Yes" field selected together with "No Abuse Found").
+- Shows an alert with the tab and the field involved, plus a badge on the affected tab.
+- Includes a checklist reminder and an on-hold list for cases that need a second opinion.
+- Production version also logged, per case, whether I kept or overrode the agent's decision
+  and exported the log as CSV. This public version is simplified.
 
-Key technical components include:
-* **Reactive DOM Observation:** Configures a non-blocking `MutationObserver` instance to efficiently watch for style, variant, and attribute changes across dynamic system interfaces.
-* **Asynchronous Conflict Resolution Gates:** Runs real-time evaluation logic combining state parameters. If conflicting input data signals are detected simultaneously, it flags the mismatch instantly.
-* **Visual Safety Alarms:** Deploys inline flashing headers, contextual warnings, and dynamic alerts (*"Smart Toasts"*) across the DOM tree to warn the auditor and block invalid submittals.
-* **Queue Management Integration:** Implements an internal case tracking queue utilizing persistent state caching via `LocalStorage` so users can suspend edge-case files for secondary review without loss of progress.
+## Result
+- In a two-week sample I disagreed with the agent's decision on 146 of 149 audits,
+  which showed how often a default decision could slip through unreviewed.
+- After using the tool I had no false-positive defects on my audits.
+- The logged records served as documentation when appealing defects.
 
-## 📈 Data-Driven Impact
-* **Data Quality Defect Reduction:** Completely eliminated structural data mismatch anomalies by over 90% across implemented target categories.
-* **Risk Mitigation:** Provided immediate, real-time protection to data pipelines before execution strings hit core backend logging APIs.
-* **Production Transparency:** Integrates an automated logging mechanism allowing users to export cached productivity errors via localized CSV data sheets for quality evaluations.
+## Built with
+JavaScript, Tampermonkey, browser localStorage. Developed with AI assistance:
+I defined the problem and the rules, tested the tool on real cases, and iterated on it.
+
+## Note
+The code is sanitized: URLs, labels and identifiers are generic, and no internal data is included.
